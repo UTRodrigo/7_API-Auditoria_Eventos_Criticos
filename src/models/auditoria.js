@@ -13,9 +13,13 @@ const auditSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Usuario",
-        required: true
+        required: false
     },
     action: {
+        type: String,
+        required: true
+    },
+    endpoint: {
         type: String,
         required: true
     },
