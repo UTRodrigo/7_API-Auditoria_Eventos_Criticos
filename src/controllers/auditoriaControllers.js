@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 exports.getLogs = async(req, res) => {
     try
     {
-        const logs = await Auditoria.find().populate("usuarioId", "name email").sort({ timestamp: -1 });
+        const logs = await Auditoria.find().populate("userId", "name email").sort({ timestamp: -1 });
         res.status(200).json(logs);
     }
     catch(error)
@@ -22,7 +22,7 @@ exports.getLogById = async(req, res) => {
             return res.status(400).json({msg: "Invalid log ID"});
         }
 
-        const log = await Auditoria.findById(id).populate("usuarioId", "name email");
+        const log = await Auditoria.findById(id).populate("userId", "name email");
         if (!log)
         {
             return res.status(404).json({msg: "Log not found"});
@@ -39,13 +39,13 @@ exports.getLogById = async(req, res) => {
 exports.getLogsByUser = async(req, res) => {
     try
     {
-        const { usuarioId } = req.params;
-        if (!mongoose.Types.ObjectId.isValid(usuarioId))
+        const { userId } = req.params;
+        if (!mongoose.Types.ObjectId.isValid(userId))
         {
             return res.status(400).json({msg: "Invalid user ID"});
         }
 
-        const logs = await Auditoria.find({usuarioId: usuarioId}).populate("usuarioId", "name email").sort({ timestamp: -1 });
+        const logs = await Auditoria.find({userId: userId}).populate("userId", "name email").sort({ timestamp: -1 });
 
         res.status(200).json(logs);
     }
