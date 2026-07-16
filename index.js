@@ -5,6 +5,7 @@ require("dotenv").config();
 //funciones
 const connectDB = require("./src/config/database");
 const auditoriaMiddleware = require("./src/middlewares/auditoriaMiddleware");
+const tokenVerification = require("./src/middlewares/appTokenMiddleware");
 
 //variables
 const app = express();
@@ -18,6 +19,7 @@ const auditoriaRoutes = require("./src/routes/auditoriaRoutes");
 app.use(express.json());
 connectDB();
 app.use(auditoriaMiddleware);
+app.use(tokenVerification);
 app.use("/users", userRoutes);
 app.use("/auditoria", auditoriaRoutes);
 
