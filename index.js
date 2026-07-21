@@ -1,5 +1,6 @@
 //dependencias
 const express = require('express');
+const helmet = require('helmet');
 require("dotenv").config();
 
 //funciones
@@ -17,6 +18,7 @@ const auditoriaRoutes = require("./src/routes/auditoriaRoutes");
 
 //index.js
 app.use(express.json());
+app.use(helmet());
 connectDB();
 app.use(auditoriaMiddleware);
 app.use(tokenVerification);
