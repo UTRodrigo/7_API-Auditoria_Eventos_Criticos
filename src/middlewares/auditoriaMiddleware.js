@@ -1,4 +1,5 @@
 const Auditoria = require("../models/auditoria");
+const logger = require("../config/logger");
 
 const sanitizar = (texto) => {
     if (!texto) return "";
@@ -25,7 +26,7 @@ const auditoriaMiddleware = (req, res, next) => {
                     req.ip || req.connection.remoteAddress
                 ),
 
-                userId: req.body.userId || null,
+                userId: req.body?.userId || null,
 
                 action: sanitizar(req.method),
 
@@ -36,7 +37,7 @@ const auditoriaMiddleware = (req, res, next) => {
                 statusCode: res.statusCode
             };
 
-            await Auditoria.create(log);
+            logger.info(log);
 
         } catch (error) {
             console.error("Audit log error:", error.message);
